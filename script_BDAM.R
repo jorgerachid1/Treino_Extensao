@@ -157,6 +157,11 @@ head(codigos)
 # Tarefa 2: Manipulação dos dados
 # Criar uma nova variável em dados_bd4 MUNICIPIOS atribuindo os códigos dos municípios, de forma a ficar
 # coerente com os nomes dos municipios e códigos IBGE
+names(codigos)[1:2] <- c("municipio", "CODMUNRES")
+codigos_rj <- codigos[substr(codigos$CODMUNRES, 1, 2) == "33", ]  # só RJ (ex.: existe Valença na BA e no RJ)
+dados_bd4$MUNICIPIOS <- codigos_rj$CODMUNRES[match(sub(" \\(RJ\\)$", "", dados_bd4$MUNICIPIO), codigos_rj$municipio)]
+dados_bd4$MUNICIPIOS[dados_bd4$MUNICIPIO == "Rio de Janeiro"] <- 33  # linha sem "(RJ)" é o estado
+dados_bd4
 
 # Ao terminar a Tarefa 2 commit com a mensagem " script - tarefa 1 a 2" e envie para o repositório Treino_Extensao
 
